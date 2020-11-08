@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Oct 14 19:15:06 2020
+
+@author: FrancescoIraci
+"""
+
+import numpy as np
+
+
+
+def readfast(fname, N):
+    #f=file(fname,"r") python2
+    f=open(fname,"r")
+    (month, facecream, facewash, toothpaste, bathingsoap, shampoo, moisturizer) = (
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"),
+        np.zeros(N,dtype="int"))
+    i=0
+    for linetext in f:
+        if(linetext[0]==str("#")):
+            continue
+        word_list = linetext.split()
+        #split splits a line in elements
+        if(word_list[0]!=str("#")):
+            month[i]=np.int(word_list[0])
+            facecream[i]=np.int(word_list[1])
+            facewash[i]=np.int(word_list[2])
+            toothpaste[i]=np.int(word_list[3])
+            bathingsoap[i]=np.int(word_list[4])
+            shampoo[i]=np.int(word_list[5])
+            moisturizer[i]=np.int(word_list[6])
+            i=i+1
+    #end [ for linetext in f ]
+    f.close()
+    return (month,facecream, facewash, toothpaste, bathingsoap, shampoo, moisturizer)
