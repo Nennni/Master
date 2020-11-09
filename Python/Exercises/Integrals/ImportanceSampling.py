@@ -55,6 +55,7 @@ print('Integrals with importance sampling method:',I1)
 #I = np.log10(I)
 #I1 = np.log10(I1)
 #myrange = np.logspace(1e3,6e6)
+#cicciopaolo
 a = plt.plot(N,I,'r.',label='Mean Value method')
 b = plt.plot(N,I,'b-')
 c = plt.plot(N,I1, color='#cc7722' , marker='1',label='Importance Sampling')
