@@ -25,39 +25,69 @@ h = 0.01
 N = (t_fin-t_0)/h
 t = np.arange(t_0,t_fin,h)
 
-x = np.zeros(int(N),float)			#PARTICELLA 1
-x[0] = (1.+1.)**0.5
-y = np.zeros(int(N),float)			#PARTICELLA 2
-y[0] = (1.+1.)**0.5
 
-X=[]
+xx = np.zeros(int(N),float)
+xy = np.zeros(int(N),float)
+x = []
+x.append(xx)
+x.append(xy)
+x = np.array(x)
+x[0,0] = 1.
+x[1,0] = -1.
+print(x)
+
+yx = np.zeros(int(N),float)
+yy = np.zeros(int(N),float)
+y = []
+y.append(yx)
+y.append(yy)
+y = np.array(y)
+y[0,0] = 1.
+y[1,0] = -1.
+print(y)
+
+vxx = np.zeros(int(N),float)					
+vxy = np.zeros(int(N),float)			
+vx=[]
+vx.append(vxx)
+vx.append(vxy)
+vx = np.array(vx) 
+vx[0,0] = -0.5
+vx[1,0] = 0.5				
+
+vyx = np.zeros(int(N),float)					
+vyy = np.zeros(int(N),float)			
+vy=[]
+vy.append(vyx)
+vy.append(vyy)
+vy = np.array(vy) 
+vy[0,0] = 0.
+vy[1,0] = 0.		
+
+X = []
 X.append(x)
 X.append(y)
-X = np.array(X) 	#MATRICE DELLE PARTICELLE
-
-vx = np.zeros(int(N),float)			#VELOCITA PARTICELLA 1
-vx[0] = (0.25+0.25)**0.5		
-vy = np.zeros(int(N),float)			#VELOCITA PARTICELLA 2
-vy[0] = 0.
-V=[]
+X=np.array(X)
+print("Matrice posizioni", X[0,0,int(N)-1] )
+V = []
 V.append(vx)
 V.append(vy)
-V = np.array(V) 				#MATRICE DELLE VELOCITA
-
-X=np.transpose(X)
-V=np.transpose(V)
+V=np.array(V)
+print("Matrice velocità",V[0,1,0],V[1,0,0]) # V [ particella, coordinata, tempo ]
 
 # -------- EULER -------- x(t+h) = x(t) + h f(x,t)
 for i in range(1,int(N)):
-	for j in range(len(m)):	
-		X[i,j]=X[i-1,j]+h*V[i-1,j]
-		for k in range(len(m)):
-			if (k!=j):
-				V[i,j]=V[i-1,j]+h*(-(X[i-1,k]-X[i-1,j])/(np.any((abs(X[i-1,k]-X[i-1,j]))**3)))
-X=np.transpose(X)
-print(X)
+	for k in range(Np):
+		for j in range(Np):
+			if(j!=k):
+				V[:,:,i] = V[:,:,i-1]
+				V[:,:,i] += h*( (X[k,:,i-1] - X[j,:,i-1])/(((np.linalg.norm(X[k,:,i-1] - X[j,:,i-1]))**3)) ) 
+	X[:,:,i] = X[:,:,i-1] + h*V[:,:,i-1]
 
-grafic = plt.plot(X[0,:],X[1,:],"b-")
+x = []
+x.append(X[0,:,:])
+print(x)
+grafic = plt.plot(X[0,:,:],X[1,:,:],"b-")
 plt.xlabel("X")
 plt.ylabel("Y")
 plt.tight_layout()
