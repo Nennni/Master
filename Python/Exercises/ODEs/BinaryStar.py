@@ -60,8 +60,10 @@ for k in range(1,int(N)):
 			if(j!=i):
 
 				k1x[i,:,k]=0.5*h*V1[i,:,k-1]
+				k1x[j,:,k]=0.5*h*V1[j,:,k-1]
 				k1v[i,:,k]=0.5*h*(-(X1[i,:,k-1] - X1[j,:,k-1])/((linalg.norm(X1[i,:,k-1] - X1[j,:,k-1]))**3))
-				xth2[i,:,k] = X1[i,:,k-1] + k1x[i,:,k]
+				xth2[i,:,k-1] = X1[i,:,k-1] + k1x[i,:,k]
+				xth2[j,:,k-1] = X1[j,:,k-1] + k1x[j,:,k]
 				k2x[i,:,k] = h*(V1[i,:,k-1]+k1v[i,:,k])
 				k2v[i,:,k] = h*(-(xth2[i,:,k-1] - xth2[j,:,k-1])/((linalg.norm(xth2[i,:,k-1] - xth2[j,:,k-1]))**3))
 				X1[i,:,k]=X1[i,:,k-1]+k2x[i,:,k]
