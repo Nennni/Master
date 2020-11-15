@@ -26,7 +26,6 @@ X[1,0,0], X[1,1,0] = -1.,-1.
 V[0,0,0],V[0,1,0] = -0.5,0.
 V[1,0,0],V[1,1,0] = 0.5,0.
 
-
 # -------- EULER -------- x(t+h) = x(t) + h f(x,t)
 for i in range(1,int(N)):
 	for k in range(Np):
@@ -34,7 +33,6 @@ for i in range(1,int(N)):
 			if(j!=k):
 				V[k,:,i] = V[k,:,i-1]+h*( -(X[k,:,i-1] - X[j,:,i-1])/((linalg.norm(X[k,:,i-1] - X[j,:,i-1]))**3) ) 
 				X[k,:,i] = X[k,:,i-1] + h*V[k,:,i-1]
-
 
 # -------- MIDPOINT --------
 t = np.arange(t_0,t_fin,0.5*h)
@@ -58,7 +56,6 @@ for k in range(1,int(N)):
 	for i in range(2):
 		for j in range(2):
 			if(j!=i):
-
 				k1x[i,:,k]=0.5*h*V1[i,:,k-1]
 				k1x[j,:,k]=0.5*h*V1[j,:,k-1]
 				k1v[i,:,k]=0.5*h*(-(X1[i,:,k-1] - X1[j,:,k-1])/((linalg.norm(X1[i,:,k-1] - X1[j,:,k-1]))**3))
@@ -69,7 +66,7 @@ for k in range(1,int(N)):
 				X1[i,:,k]=X1[i,:,k-1]+k2x[i,:,k]
 				V1[i,:,k] = V1[i,:,k-1]+k2v[i,:,k]
 
-
+# ------- GRAFICS -------
 grafic = plt.plot(X[0,0,:],X[0,1,:],"b-",label='m1, Euler')
 grafic1 =plt.plot(X[1,0,:],X[1,1,:],"g-",label='m2, Euler')
 grafic2 = plt.plot(X1[0,0,:],X1[0,1,:],"r-",label='m1, Midpoint')
