@@ -21,6 +21,7 @@ iterate = 0
 agraph=[a/au]
 egraph=[e]
 
+
 # -------- EULER -------- x(t+h) = x(t) + h f(x,t)
 while (abs(a-aLSO)/aLSO>tol and iterate<1e5):
 		anew,enew=euler(e,a)
