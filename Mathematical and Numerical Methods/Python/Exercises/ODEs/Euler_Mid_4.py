@@ -14,7 +14,6 @@ t = np.arange(t_0,t_fin,h)
 x = np.zeros(N,float)
 x[0] = x_t0
 
-
 # -------- EULER -------- x(t+h) = x(t) + h f(x,t)
 for i in range(1,int(N)):
 	x[i] = x[i-1] + h*f(x[i-1],t[i-1])
