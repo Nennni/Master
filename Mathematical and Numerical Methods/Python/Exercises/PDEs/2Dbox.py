@@ -7,7 +7,7 @@ M = 100 #(M+1)x(M+1) will be my matrix
 V = 1. #volt
 phi = np.zeros([M+1,M+1],float)
 phi[0,:]=V
-delta = 1e-3
+delta = 1e-2
 phi_old = np.zeros([M+1,M+1],float)
 norma = 10.
 
