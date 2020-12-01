@@ -19,7 +19,7 @@ Tnew = np.zeros(int(M),float)
 Tnew[0]=Thot
 Tnew[int(M)-1]=Tbath
 
-for j in range(0,1001):
+for j in range(1,1001):
 	for i in range(1,int(M)-1):
 		Tnew[i] = T[i]+const*(T[i+1]+T[i-1]-2*T[i])
 	T = Tnew
