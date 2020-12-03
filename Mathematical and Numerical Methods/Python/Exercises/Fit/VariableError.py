@@ -9,30 +9,26 @@ def data_set():
 	y=10.**a * x**b #intrinsic relation y=10**a * x**b 
 	x=np.log10(x)
 	y=np.log10(y)
-	sigma=1.
-	y=rnd.normal(y,sigma) #add gaussian noise 
-	return x,y
+	sigma=np.zeros(len(x),float)
+	for i in range(len(y)):
+		sigma[i]=10.*rnd.random()
+		y[i]=rnd.normal(y[i],sigma[i])
+		w=1./sigma**2
+	return x,y,w
 
 def fit_params():
-	x,y = data_set()
-	mean_x = np.sum(x)/(len(x)-1)
-	mean_y = np.sum(y)/(len(y)-1)
+	x,y,w = data_set()
+	mean_x = np.sum(w*x)/np.sum(w)
+	mean_y = np.sum(w*y)/np.sum(w)
 	A,B=0.,0.
-	sx,sy=0.,0.
-	x2 = np.zeros(len(x),float)
-	for i in range(len(x)-1):
-		sy += y[i]*(x[i]-mean_x)
-		sx += x[i]*(x[i]-mean_x)
-		x2[i] = x[i]*x[i]
-
-	B = (sy/sx)
+	B = np.sum(w*y*(x-mean_x))/(np.sum(w*x*(x-mean_x)))
 	A = mean_y - mean_x*B
-	
-	delta = (len(x)-1)*np.sum(x2) - (np.sum(x))**2
+
+	delta = np.sum(w)*np.sum(w*x*x)-(np.sum(w*x))**2
 	return A,B,delta
 
 def errorParams():
-	x,y=data_set()
+	x,y,w=data_set()
 	A,B,delta=fit_params()
 	s=0.
 	for i in range(len(x)-2):
@@ -44,7 +40,7 @@ def errorParams():
 
 # ------- MAIN --------
 
-x,y=data_set()
+x,y,w=data_set()
 A,B,sigma_A,sigma_B,sigma_y = errorParams()
 print("A =",A,"+/-",sigma_A)
 print("B =",B,"+/-",sigma_B)
@@ -52,6 +48,10 @@ print("sigma y = ",sigma_y)
 
 yfit = np.zeros(len(x)-1,'float')
 yfit = A+B*x
+Chi2=0.
+for i in range(len(x)-1):
+	Chi2 += w[i]*((y[i] - A - B*x[i])/(sigma_y))**2
+print("Chi^2=",Chi2)
 
 # -------- PLOTS --------
 
