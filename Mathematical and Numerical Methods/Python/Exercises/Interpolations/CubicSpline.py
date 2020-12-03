@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy as scipy
+from scipy.interpolate import CubicSpline
 
 def f(x,xi,xi1,yi,yi1,ki,ki1):
 	a = ki/6. * ( ((x-xi1)**3)/(xi-xi1) - (xi-xi1)*(x-xi1) )
@@ -39,11 +41,13 @@ print(K)
 # Calculate the interpolation line
 x1 = np.arange(0,18,0.2)
 fun=np.zeros(len(x1),float)
-for i in range(0,len(K)-1):
-	for j in range (len(x1)-1):
-		if(x[i]>=x1[j]) and (x[i]<x1[j+1]):
-			ii=i
-		fun[j] = f(x1[j],x[ii],x[ii+1],y[ii],y[ii+1],K[i],K[ii+1])+(y[i]*(x1[j]-x[ii+1]) - y[ii+1]*(x1[j]-x[ii]))/(x1[j] - x[ii+1]) 
+#for i in range(0,len(K)-1):
+#	for j in range (len(x1)-1):
+#		if(x[i]>=x1[j]) and (x[i]<x1[j+1]):
+#			ii=i
+#		fun[j] = f(x1[j],x[ii],x[ii+1],y[ii],y[ii+1],K[i],K[ii+1])+(y[i]*(x1[j]-x[ii+1]) - y[ii+1]*(x1[j]-x[ii]))/(x1[j] - x[ii+1]) 
+
+fun = CubicSpline(x,y)
 
 graph = plt.plot(x,y,"bo",label='Data')
 graph1 = plt.plot(x1,fun,"r.",label='Interpolation')
