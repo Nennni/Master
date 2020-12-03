@@ -30,24 +30,27 @@ for i in range(len(y)):
 		y1[i] = 6*( (y[i]-y[i+1])/(x[i]-x[i+1]) - ((y[i+1])-y[i+2])/(x[i+1]-x[i+2])  )   
 print(y1)
 
-K = np.linalg.solve(A,y1)
-for i in range(len(K)):
-	k[i+1] = K[i]
-
+k = np.linalg.solve(A,y1)
+K=[0.]
+for i in range(len(k)):
+	K.append(k[i])
+K.append(0.)
+print(K)
 # Calculate the interpolation line
 x1 = np.arange(0,18,0.2)
 fun=np.zeros(len(x1),float)
-for i in range (len(x1)-1):
-	for j in range(0,len(k)-1):
-		#for n in range(len(y)-1):
-		fun[i] = f(x1[i],x[j],x[j+1],y[j],y[j+1],k[j],k[j+1])+(y[j]*(x1[i]-x[j+1]) - y[j+1]*(x1[i]-x[j]))/(x1[j] - x[j+1])
-		#fun[0] = 
+for i in range(0,len(K)-1):
+	for j in range (len(x1)-1):
+		if(x[i]>=x1[j]) and (x[i]<x1[j+1]):
+			ii=i
+		fun[j] = f(x1[j],x[ii],x[ii+1],y[ii],y[ii+1],K[i],K[ii+1])+(y[i]*(x1[j]-x[ii+1]) - y[ii+1]*(x1[j]-x[ii]))/(x1[j] - x[ii+1]) 
 
 graph = plt.plot(x,y,"bo",label='Data')
 graph1 = plt.plot(x1,fun,"r.",label='Interpolation')
 plt.xlabel(" $x$ ")
 plt.ylabel("$f(x)$")
 plt.legend(loc='lower left')
+plt.tight_layout()
 plt.show()
 
 
