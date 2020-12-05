@@ -2,7 +2,6 @@ import numpy as np
 from numpy.linalg import solve
 from numpy import random as rnd
 import matplotlib.pyplot as plt
-import scipy as scipy
 from scipy import optimize as opt
 #from scipy import optimize as opt
 
@@ -17,13 +16,35 @@ def data_set():
 		sigma[i]=0.1*rnd.random() 
 		y[i]=rnd.normal(y[i],sigma[i]) #add gaussian noise
 	return x,y
-def fit_params(a,x,y):	
-	x,y = data_set()
-	f = a[2]*np.exp(-((x-a[0])**2)/(2.*a[1]**2)) -y
+
+def gauss_res(a,x,y):
+	gauss_res=a[2]*np.exp(-(x-a[0])**2/2./a[1]**2)-y
+	return gauss_res
+def gauss(a,x):
+	f = a[2]*np.exp(-(x-a[0])**2/2./a[1]**2)
 	return f
+
 
 x,y = data_set()
 a = np.zeros(3,'float')
-a[0],a[1],a[2] = 0. , 2. , 1.
-Isq = scipy.optimize.least_squares((fit_params,a, args=(x,y)))
+a[0],a[1],a[2] = 2. , 2. , 2.
+
+lsq=opt.least_squares(gauss_res,a,args=(x,y),xtol=1e-07,loss='cauchy')
+a = lsq.x
+
+f = gauss(a,x)
+
+graph = plt.scatter(x,y,marker='*',label='Data')
+graph1 = plt.plot(x,f,"r-",label='Scipy Fit')
+plt.xlabel('$x_{i}$')
+plt.ylabel('$y_{i}$')
+plt.legend(loc = 'upper right')
+plt.show()
+
+
+
+
+
+
+
 
