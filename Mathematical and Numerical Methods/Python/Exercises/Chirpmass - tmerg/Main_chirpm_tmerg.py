@@ -1,15 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 15 19:56:30 2020
-
-@author: FrancescoIraci
-"""
-
 #from Readchirpmasstmerg import *
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import ticker
+import matplotlib.colors as colors
 
 plt.rcParams.update({'font.size': 15})
 
@@ -26,9 +19,11 @@ chirpm=np.genfromtxt("chripmass_bin.txt", comments="#")
 tmerg=np.genfromtxt("tmerg_bin.txt", comments="#")
 Z=np.genfromtxt("chirpmass_tmerg_tot.txt", comments="#")
 
-
-
-cs=plt.contourf(tmerg, chirpm , Z, levels=100, locator=ticker.LogLocator() , cmap='Reds')
+L = int(100)
+# -------- PLOTS --------
+#norm=colors.LogNorm(), cmap='Reds'
+cs=plt.contourf(tmerg, chirpm , Z, levels=L)
+cs1 = plt.contour(tmerg, chirpm , Z, levels=100, norm = colors.LogNorm(),cmap='summer')
 cbar = plt.colorbar(cs,orientation='vertical')
 cbar.solids.set_edgecolor("face") 
 cbar.set_label('$N_{merg}$') 
