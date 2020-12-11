@@ -7,7 +7,7 @@ import time as time
 fname = 'sunspots.txt'
 month,spots = np.genfromtxt(fname,dtype='float',comments='#',usecols=(0,1), unpack = True)
 
-#plot mon
+#plot spots vs months
 graph=plt.plot(month,spots)
 plt.xlabel('Month')
 plt.ylabel('Sunspot number')
@@ -50,6 +50,7 @@ for i in range(len(cabs)):
 y = irfft(c)
 m = range(len(y))
 
+#-------PLOT with denoise
 a = plt.plot(month,spots,color='navy',linewidth=1.5,label="Signal")
 b = plt.plot(m,y,linewidth=2,color='coral',label="De-noised signal")
 plt.xlabel("Month")
