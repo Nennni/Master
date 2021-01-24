@@ -13,7 +13,7 @@ tol=1e-4
 m1=np.zeros(len(T),float)
 j=0
 for i in range(len(T)): 
-	if (abs(t[j+1]-T[i])<tol and j<len(t)-2): #if the time values ar the same i need to go to the next t[j]
+	if (abs(t[j+1]-T[i])<tol and j<len(t)-2): #if the time values are the same i need to go to the next t[j]
 		j+=1
 	m1[i]=f(t[j],t[j+1],T[i],m[j],m[j+1])
 

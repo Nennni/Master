@@ -40,12 +40,7 @@ K.append(0.)
 print(K)
 # Calculate the interpolation line
 x1 = np.arange(0,18,0.2)
-fun=np.zeros(len(x1),float)
-#for i in range(0,len(K)-1):
-#	for j in range (len(x1)-1):
-#		if(x[i]>=x1[j]) and (x[i]<x1[j+1]):
-#			ii=i
-#		fun[j] = f(x1[j],x[ii],x[ii+1],y[ii],y[ii+1],K[i],K[ii+1])+(y[i]*(x1[j]-x[ii+1]) - y[ii+1]*(x1[j]-x[ii]))/(x1[j] - x[ii+1]) 
+fun= np.zeros(len(x1),float)
 
 fun = CubicSpline(x,y)
 
